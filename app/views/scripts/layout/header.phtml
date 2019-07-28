@@ -1,0 +1,12 @@
+<div class="header">
+	<div class="logo"></div>
+	<div class="header_title">Моя траектория</div>
+	<div class="user">
+		<?php if($_SESSION['id']) { ?>
+			<?=$_SESSION['imya'] . ' ' . mb_substr($_SESSION['familiya'], 0, 1) . '.' ?> <a href="{$basePath$}auth/logout">выйти</a>
+		<?php } else { ?>
+			<a class="user_login" href="{$basePath$}auth/login">Войти</a>
+		<?php } ?>
+		</div>
+	</div>
+</div>

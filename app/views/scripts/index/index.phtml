@@ -1,0 +1,18 @@
+<?php 
+$this->placeHolder('base', $this->basePath);
+?>
+
+
+<?php if($_SESSION['id']) { ?>
+	<h2>Добро пожаловать!</h2>
+
+	<ul class="main_menu">
+		<li><a href="{$base$}my/kursy">Учебный профиль</a></li>
+		<li><a href="{$base$}my/zaprosy">Мои запросы</a></li>
+		<li><a href="{$base$}auth/logout">Выход</a></li>
+	</ul>
+<?php } else { ?>
+	<h1>Моя траектория</h1>
+	<div class="img_center"><img src="/img/man1.jpg" alt="Вход в систему"></div>
+	<h2>Требуется <a href="{$base$}auth/login">авторизация</a></h2>
+<?php } ?>

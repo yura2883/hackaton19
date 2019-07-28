@@ -1,0 +1,52 @@
+<?php 
+$newHref = ($v = $this->firstRoute) != 'auth/login' ? $v : '';
+
+$restricted = $this->firstRoute != 'auth/login';
+
+?>
+
+<?php if($restricted) { ?>
+	<h2>Выбранный Вами функционал доступен только зарегистрированным пользователям</h2>
+<?php } ?>
+
+<h1>Авторизация</h1>
+<div class="frm_auth yupForm">
+	<div>
+		<div>Введите СНИЛС:</div>
+		<div><div name="snils"></div></div>
+	</div>
+
+	<div>
+		<div></div>
+		<div><div class="btnLogin"></div></div>
+	</div>
+</div>
+<link rel="stylesheet" href="/js/form.files/style.css">
+<script type="text/javascript" src="/js/yup-core.js"></script>
+<script type="text/javascript" src="/js/yup-qt.js"></script>
+<script type="text/javascript" src="/js/yup-form.js"></script>
+<script type="text/javascript">
+$(function() {
+	function qry(q,p,cb,eCb) {
+      yupQuery({url:"{$basePath$}qry"})(q,p,function() {
+         var o=this.evalJS(),e=o.errText; if(e) {
+            if(!eCb || eCb.call(o,e)!==false) alert(e)
+         } else cb.call(o)
+      })
+    }
+	var frL='yupForm', txL='yupText', btL='yupButton', f1=$('.frm_auth')[frL]({flexColumns:[{width:120}, {width:340}]})
+	f1.find('[name=snils]')[txL]({width:'320px', emptyText:'11 цифр'})
+	f1.find('.btnLogin')[btL]({caption:'Войти'})[btL]('on','click', function() {
+		f1[frL]('validate', function() {
+			qry('login', f1[frL]('getObject'), function() {
+	            location.href = '{$basePath$}<?php echo $newHref; ?>'
+			}, function() {
+				f1.find('[name=snils]')[frL]('focus');
+			})
+		})
+	})
+	f1[frL]('bindJS', {__originalFields:['snils'],
+		snils: {caption:'СНИЛС', notNull:1}
+	})
+})
+</script>

@@ -1,0 +1,80 @@
+<div class="brcr">
+	<ul>
+		<li><a href="{$basePath$}">Главная</a></li>
+	</ul>
+</div>
+<h1>{$title$}</h1>
+<p>Сформируйте запрос на профессию и получите свою оптимальную траекторию обучения</p>
+<h2>Мои запросы</h2>
+<div class="grZaprosy"></div>
+
+<h2>Новый запрос</h2>
+<div class="frmAddZapros yupForm">
+	<div>
+		<div>Профессия:</div>
+		<div><div name="professii_id"></div></div>
+	</div>
+	<div>
+		<div></div>
+		<div><div class="btnAdd"></div></div>
+	</div>
+</div>
+
+<link rel="stylesheet" href="/js/form.files/style.css">
+<link rel="stylesheet" href="/js/grid.files/grid.css">
+<script type="text/javascript" src="/js/yup-core.js"></script>
+<script type="text/javascript" src="/js/yup-qt.js"></script>
+<script type="text/javascript" src="/js/yup-form.js"></script>
+<script type="text/javascript" src="/js/yup-grid.js"></script>
+<script type="text/javascript">
+$(function() {
+	function qry(q,p,cb,eCb) {
+      yupQuery({url:"{$basePath$}qry"})(q,p,function() {
+         var o=this.evalJS(),e=o.errText; if(e) {
+            if(!eCb || eCb.call(o,e)!==false) alert(e)
+         } else cb.call(o)
+      })
+    }
+	var frL='yupForm', txL='yupText', btL='yupButton', liL='yupList', grL='yupGrid', gr1=$('.grZaprosy'), f1=$('.frmAddZapros')[frL]({flexColumns:[{width:160}, {width:400}]})
+
+
+	f1.find('[name=professii_id]')[liL]({key:'id', field:'professiya', width:'320px', emptyText:'введите текст для поиска профессии', gridConfig:{
+		style: {maxHeight:'350px'}}, callback: function(ph, v, cb) {
+		qry('quickFind_professii', {ph:ph, v:v}, function() {
+			cb(this.__rowData)
+		})
+	}})
+
+
+	f1.find('.btnAdd')[btL]({caption:'Получить рекомендации'})[btL]('on','click', function() {
+		f1[frL]('validate', function() {
+			qry('addMyZapros', f1[frL]('getObject'), function() {
+	            loadRecords()
+			})
+		})
+	})
+
+	function loadRecords() {
+		qry('load_MyZaprosy', {}, function() {
+			var rs=this
+			if(!gr1.hasClass(grL)) {
+				gr1[grL]({head:1, style:{maxHeight:'300px'},json: $.extend(true, rs, {
+					data_zaprosa: {caption:"Дата запроса", type:'date', width:80},
+					professiya: {caption:"Профессия", width:'50%', minWidth:80},
+					zapros_id: {caption:'Траектории', width:70, renderer: function(o) {
+						o.inner = '<a href="{$basePath$}my/traektory/' + o.value + '" target="_blank">просмотр</a>'
+					}}
+				})})[grL]('render')
+			} else {
+				gr1[grL]('load', rs)
+			}
+		})
+	}
+
+	f1[frL]('bindJS', {__originalFields:['professii_id','kursy_id','data_okonch'],
+		professii_id: {caption:'Профессия', notNull:1}
+	})
+
+	loadRecords()
+})
+</script>

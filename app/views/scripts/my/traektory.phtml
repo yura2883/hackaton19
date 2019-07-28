@@ -1,0 +1,34 @@
+<div class="brcr">
+	<ul>
+		<li><a href="{$basePath$}">Главная</a></li>
+		<li>\</li>
+		<li><a href="{$basePath$}my\zaprosy">Мои запросы</a></li>
+	</ul>
+</div>
+
+<h1>Рекомендуемые траектории обучения</h1>
+<h2>Цель: <?=$this->escape($this->target)?></h2>
+
+<?php if(count($this->traekt)) { ?>
+	<?php 
+	echo '<ul class="my_traekt">';
+	$n = 0;
+	foreach($this->traekt as $tr) {
+		$n ++;
+		echo '<li class="traekt">';
+			echo '<div class="traekt">Траектория №' . $n . '</div>';
+			echo '<ul class="traekt_kursy">';
+			foreach($tr['kursy'] as $kurs) {
+				echo '<li class="kurs flex_sa">';
+					echo '<div class="kurs_name">' . $this->escape($kurs['kurs']) . '</div><div class="uch_zaved">' . $kurs['uch_zaved'] . '</div>';
+				echo '</li>';
+			}
+			echo '</ul>';
+
+		echo '</li>';
+	}
+	echo '</ul>';
+	?>
+<?php } else { ?>
+	<div class="no_data">Траектории не были выявлены. Возможно Вы обладаете нужными компетенциями, либо не достаточно входных данных</div>
+<?php } ?>

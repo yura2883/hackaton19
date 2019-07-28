@@ -1,0 +1,28 @@
+html, body {margin:0; padding: 0; font-size: 16px; font-family:Arial, Helvetica, 'sans-serif'}
+.header {width:100%; padding: 10px; background-color: #28552F; margin: 10px 0; color:#fff;
+	display: flex; justify-content: space-between; box-sizing: border-box; 
+}
+.header a {color:#7FAACC;}
+.header .logo {width:40px; height:40px; background-image: url(/img/smile.png); }
+.body {
+	max-width:980px; margin:0 auto; padding:10px;
+}
+.header_title {font-size:26px}
+.body a {
+	color: #1863A2;
+	text-decoration: none;
+}
+.body h1 {font-size:23px; color:#00600E; margin-left:20px}
+.body h2 {font-size:18px; color:#2A452E; margin-left:50px; margin-top:30px}
+.body>ul {margin-left: 20px}
+.footer {width:100%; padding: 10px; background-color: #1E1E1E; color:#fff; margin: 40px 0; display:flex; justify-content: space-around;}
+
+.body .brcr ul {display:flex; justify-content:flex-start}
+.body .brcr ul > li{list-style-type: none; margin: 0 6px;}
+.uch_zaved, .data_okonch {float:left; margin-left:50; color:#aaa;}
+.flex_sb {display:flex; justify-content: space-between;}
+.flex_sa {display:flex; justify-content: space-around;}
+.float_l {float: left;}
+.clear_fix {clear:left}
+
+.img_center {display:flex; justify-content: space-around;}
